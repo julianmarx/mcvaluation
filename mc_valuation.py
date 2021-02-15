@@ -153,7 +153,7 @@ with st.beta_expander('How to Use'):
         **stock ticker** of your company. Subsequently, the program will \
         provide you with **historical key metrics** you can use to specify \
         key inputs required for valuing the company of your choice. \
-        In addition you need to provide a **discount rate** and a **terminal \
+        In addition, you need to provide a **discount rate** and a **terminal \
         growth rate** at which your company is assumed to grow after year 5 \
         into the future.')
 
