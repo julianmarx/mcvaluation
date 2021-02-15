@@ -175,7 +175,7 @@ if status_radio == 'Search':
 
 with st.beta_expander('Monte Carlo Simulation'):
 
-    st.subheader('Random variables distributions')
+    st.subheader('Random variables')
     st.write('When conducting a company valuation through a Monte Carlo simulation, \
         a variety of input metrics can be treated as random variables. Such \
         variables can be distributed according to different distributions. \
@@ -210,21 +210,11 @@ with st.beta_expander('Monte Carlo Simulation'):
         'NWC ratio' : ''
     }
 
+
     col11, col12, col13 = st.beta_columns(3)
+
+
     with col11:
-        st.subheader('Normal distribution')
-        st.image('https://github.com/julianmarx/mcvaluation/blob/main/figures/normal_distribution.PNG', use_column_width = True)
-    with col12:
-        st.subheader('Triangular distribution')
-        st.image('triangular_distribution.png', use_column_width = True)
-    with col13:
-        st.subheader('Uniform distribution')
-        st.image('uniform_distribution.png', use_column_width = True)
-
-    col21, col22, col23 = st.beta_columns(3)
-
-
-    with col21:
         st.subheader('Revenue growth')
         radio_button_revenue_growth = st.radio('Choose growth rate distribution', ('Normal', 'Triangular', 'Uniform'))
 
@@ -250,7 +240,7 @@ with st.beta_expander('Monte Carlo Simulation'):
             parameter_dict_distribution['revenue growth'] = 'uniform'
         
 
-    with col22:
+    with col12:
         st.subheader('EBIT margin')
         radio_button_ebit_margin = st.radio('Choose EBIT margin distribution', ('Normal', 'Triangular', 'Uniform'))
 
@@ -276,7 +266,7 @@ with st.beta_expander('Monte Carlo Simulation'):
             parameter_dict_distribution['ebit margin'] = 'uniform'
 
 
-    with col23:
+    with col13:
         st.subheader('Tax rate')
         radio_button_tax_rate = st.radio('Choose tax rate distribution', ('Normal', 'Triangular', 'Uniform'))
 
@@ -302,9 +292,9 @@ with st.beta_expander('Monte Carlo Simulation'):
             parameter_dict_distribution['tax rate'] = 'uniform'
 
         
-    col31, col32, col33 = st.beta_columns(3)
+    col21, col22, col23 = st.beta_columns(3)
 
-    with col31:
+    with col21:
         st.subheader('Net capex/sales')
         radio_button_tax_rate = st.radio('Choose capex ratio distribution', ('Normal', 'Triangular', 'Uniform'))
 
@@ -329,7 +319,7 @@ with st.beta_expander('Monte Carlo Simulation'):
             parameter_dict_2['capex ratio'] = upper_input
             parameter_dict_distribution['capex ratio'] = 'uniform'
 
-    with col32:
+    with col22:
         st.subheader('NWC/sales')
         radio_button_tax_rate = st.radio('Choose NWC ratio distribution', ('Normal', 'Triangular', 'Uniform'))
 
@@ -354,10 +344,7 @@ with st.beta_expander('Monte Carlo Simulation'):
             parameter_dict_2['NWC ratio'] = upper_input
             parameter_dict_distribution['NWC ratio'] = 'uniform'
 
-    parameter_dict_1['latest revenue'] = company.income_statement.loc['totalRevenue', company.income_statement.columns[-1]]
-    parameter_dict_1['net debt'] = company.inputs.loc['netDebt', 'Historical average']
-
-    with col33:
+    with col23:
         st.subheader('Additional inputs')
         discount_rate = (st.number_input('Discount rate:')/100)
         terminal_growth = (st.number_input('Terminal growth rate:')/100)
@@ -368,6 +355,8 @@ with st.beta_expander('Monte Carlo Simulation'):
     revenue_list_of_lists = []
     ebit_list_of_lists = []
     if inputs_radio == 'Search':
+        parameter_dict_1['latest revenue'] = company.income_statement.loc['totalRevenue', company.income_statement.columns[-1]]
+        parameter_dict_1['net debt'] = company.inputs.loc['netDebt', 'Historical average']
         if simulation_iterations > 1000:
             simulation_iterations = 1000
         elif simulation_iterations < 0:
@@ -381,6 +370,11 @@ with st.beta_expander('Monte Carlo Simulation'):
             equity_value_list.append(equity_value)
     
     st.header('MC Simulation Output')
+
+    mean_equity_value = np.mean(equity_value_list)
+    stddev_equity_value = np.std(equity_value_list)
+    st.write('Mean equity value: $' + str(comma_format(mean_equity_value )))
+    st.write('Equity value std. deviation: $' + str(comma_format(stddev_equity_value)))
 
     font_1 = {
         'family' : 'Arial',
@@ -401,8 +395,8 @@ with st.beta_expander('Monte Carlo Simulation'):
     st.pyplot(fig1)
 
 
-    col41, col42 = st.beta_columns(2)
-    with col41:
+    col31, col32 = st.beta_columns(2)
+    with col31:
         fig2 = plt.figure()
         x = range(6)[1:6]
         plt.style.use('seaborn-whitegrid')
@@ -414,17 +408,17 @@ with st.beta_expander('Monte Carlo Simulation'):
             plt.plot(x, i)
         st.pyplot(fig2)
     
-        with col42:
-            fig3 = plt.figure()
-            x = range(6)[1:6]
-            plt.style.use('seaborn-whitegrid')
-            plt.title('EBIT Forecast Monte Carlo Simulation', fontdict = font_2)
-            plt.xticks(ticks = x)
-            plt.xlabel('Year', fontdict = font_2)
-            plt.ylabel('EBIT (in $)', fontdict = font_2)
-            for i in ebit_list_of_lists:
-                plt.plot(x, i)
-            st.pyplot(fig3)
+    with col32:
+        fig3 = plt.figure()
+        x = range(6)[1:6]
+        plt.style.use('seaborn-whitegrid')
+        plt.title('EBIT Forecast Monte Carlo Simulation', fontdict = font_2)
+        plt.xticks(ticks = x)
+        plt.xlabel('Year', fontdict = font_2)
+        plt.ylabel('EBIT (in $)', fontdict = font_2)
+        for i in ebit_list_of_lists:
+            plt.plot(x, i)
+        st.pyplot(fig3)
 
 st.write('Disclaimer: Information and output provided on this site does \
     not constitute investment advice.')
