@@ -1,1 +1,3 @@
-# mcvaluation
+# Overview of mcvaluation application
+
+The Monte Carlo valuation app is a Streamlit web application. The app uses a probabilistic approach to company valuation. After the user of the app has entered a stock ticker, the application pulls financial information from Yahoo Finance to provide historical financial figures on important inputs to the valuation model. After specifying the distributions of the five main input variables, the application calculates the company values repeatedly drawing from the provided random distributions. After the simulation the application provides investors with a range of potential equity values of the company that is being analyzed.
