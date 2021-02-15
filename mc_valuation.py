@@ -213,7 +213,7 @@ with st.beta_expander('Monte Carlo Simulation'):
     col11, col12, col13 = st.beta_columns(3)
     with col11:
         st.subheader('Normal distribution')
-        st.image('normal_distribution.png', use_column_width = True)
+        st.image('https://github.com/julianmarx/mcvaluation/blob/main/figures/normal_distribution.PNG', use_column_width = True)
     with col12:
         st.subheader('Triangular distribution')
         st.image('triangular_distribution.png', use_column_width = True)
