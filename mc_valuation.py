@@ -348,7 +348,7 @@ with st.beta_expander('Monte Carlo Simulation'):
         st.subheader('Additional inputs')
         discount_rate = (st.number_input('Discount rate:')/100)
         terminal_growth = (st.number_input('Terminal growth rate:')/100)
-        simulation_iterations = (st.number_input('Number of simulation iterations (<1000):'))
+        simulation_iterations = (st.number_input('Number of simulation iterations (<= 1000):'))
         inputs_radio = st.radio('Please click Search if you are ready.', ('Entry', 'Search'))
 
     equity_value_list = []
