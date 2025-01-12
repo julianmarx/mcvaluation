@@ -173,252 +173,251 @@ if status_radio == 'Search':
     st.dataframe(company.inputs)
 
 
-with st.beta_expander('Monte Carlo Simulation'):
+st.subheader('Monte Carlo Simulation')
+st.subheader('Random variables')
+st.write('When conducting a company valuation through a Monte Carlo simulation, \
+    a variety of input metrics can be treated as random variables. Such \
+    variables can be distributed according to different distributions. \
+    Below, please specify the distribution from which the respective \
+    variable values should be drawn.')
 
-    st.subheader('Random variables')
-    st.write('When conducting a company valuation through a Monte Carlo simulation, \
-        a variety of input metrics can be treated as random variables. Such \
-        variables can be distributed according to different distributions. \
-        Below, please specify the distribution from which the respective \
-        variable values should be drawn.')
+parameter_dict_1 = {
+    'latest revenue' : 0,
+    'revenue growth': 0,
+    'ebit margin' : 0,
+    'tax rate' : 0,
+    'capex ratio' : 0,
+    'NWC ratio' : 0,
+    'net debt' : 0
+}
 
-    parameter_dict_1 = {
-        'latest revenue' : 0,
-        'revenue growth': 0,
-        'ebit margin' : 0,
-        'tax rate' : 0,
-        'capex ratio' : 0,
-        'NWC ratio' : 0,
-        'net debt' : 0
-    }
+parameter_dict_2 = {
+    'latest revenue' : 0,
+    'revenue growth': 0,
+    'ebit margin' : 0,
+    'tax rate' : 0,
+    'capex ratio' : 0,
+    'NWC ratio' : 0
+}
 
-    parameter_dict_2 = {
-        'latest revenue' : 0,
-        'revenue growth': 0,
-        'ebit margin' : 0,
-        'tax rate' : 0,
-        'capex ratio' : 0,
-        'NWC ratio' : 0
-    }
-
-    parameter_dict_distribution = {
-        'latest revenue' : '',
-        'revenue growth': '',
-        'ebit margin' : '',
-        'tax rate' : '',
-        'capex ratio' : '',
-        'NWC ratio' : ''
-    }
-
-
-    col11, col12, col13 = st.beta_columns(3)
+parameter_dict_distribution = {
+    'latest revenue' : '',
+    'revenue growth': '',
+    'ebit margin' : '',
+    'tax rate' : '',
+    'capex ratio' : '',
+    'NWC ratio' : ''
+}
 
 
-    with col11:
-        st.subheader('Revenue growth')
-        radio_button_revenue_growth = st.radio('Choose growth rate distribution', ('Normal', 'Triangular', 'Uniform'))
-
-        if radio_button_revenue_growth == 'Normal':
-            mean_input = st.number_input('Mean revenue growth rate (in %)')
-            stddev_input = st.number_input('Revenue growth rate std. dev. (in %)')
-            parameter_dict_1['revenue growth'] = mean_input
-            parameter_dict_2['revenue growth'] = stddev_input
-            parameter_dict_distribution['revenue growth'] = 'normal'
-
-        elif radio_button_revenue_growth == 'Triangular':
-            lower_input = st.number_input('Lower end growth rate (in %)')
-            mode_input = st.number_input('Mode growth rate (in %)')
-            parameter_dict_1['revenue growth'] = lower_input
-            parameter_dict_2['revenue growth'] = mode_input
-            parameter_dict_distribution['revenue growth'] = 'triangular'
-
-        elif radio_button_revenue_growth == 'Uniform':
-            lower_input = st.number_input('Lower end growth rate (in %)')
-            upper_input = st.number_input('Upper end growth rate (in %)')
-            parameter_dict_1['revenue growth'] = lower_input
-            parameter_dict_2['revenue growth'] = upper_input
-            parameter_dict_distribution['revenue growth'] = 'uniform'
-        
-
-    with col12:
-        st.subheader('EBIT margin')
-        radio_button_ebit_margin = st.radio('Choose EBIT margin distribution', ('Normal', 'Triangular', 'Uniform'))
-
-        if radio_button_ebit_margin == 'Normal':
-            mean_input = st.number_input('Mean EBIT margin (in %)')
-            stddev_input = st.number_input('EBIT margin std. dev. (in %)')
-            parameter_dict_1['ebit margin'] = mean_input
-            parameter_dict_2['ebit margin'] = stddev_input
-            parameter_dict_distribution['ebit margin'] = 'normal'
-
-        elif radio_button_ebit_margin == 'Triangular':
-            lower_input = st.number_input('Lower end EBIT margin (in %)')
-            mode_input = st.number_input('Mode EBIT margin (in %)')
-            parameter_dict_1['ebit margin'] = lower_input
-            parameter_dict_2['ebit margin'] = mode_input
-            parameter_dict_distribution['ebit margin'] = 'triangular'
-
-        elif radio_button_ebit_margin == 'Uniform':
-            lower_input = st.number_input('Lower end EBIT margin (in %)')
-            upper_input = st.number_input('Upper end EBIT margin (in %)')
-            parameter_dict_1['ebit margin'] = lower_input
-            parameter_dict_2['ebit margin'] = upper_input
-            parameter_dict_distribution['ebit margin'] = 'uniform'
+col11, col12, col13 = st.beta_columns(3)
 
 
-    with col13:
-        st.subheader('Tax rate')
-        radio_button_tax_rate = st.radio('Choose tax rate distribution', ('Normal', 'Triangular', 'Uniform'))
+with col11:
+    st.subheader('Revenue growth')
+    radio_button_revenue_growth = st.radio('Choose growth rate distribution', ('Normal', 'Triangular', 'Uniform'))
 
-        if radio_button_tax_rate == 'Normal':
-            mean_input = st.number_input('Mean tax rate (in %)')
-            stddev_input = st.number_input('Tax rate std. dev. (in %)')
-            parameter_dict_1['tax rate'] = mean_input
-            parameter_dict_2['tax rate'] = stddev_input
-            parameter_dict_distribution['tax rate'] = 'normal'
+    if radio_button_revenue_growth == 'Normal':
+        mean_input = st.number_input('Mean revenue growth rate (in %)')
+        stddev_input = st.number_input('Revenue growth rate std. dev. (in %)')
+        parameter_dict_1['revenue growth'] = mean_input
+        parameter_dict_2['revenue growth'] = stddev_input
+        parameter_dict_distribution['revenue growth'] = 'normal'
 
-        elif radio_button_tax_rate == 'Triangular':
-            lower_input = st.number_input('Lower end tax rate (in %)')
-            mode_input = st.number_input('Mode tax rate (in %)')
-            parameter_dict_1['tax rate'] = lower_input
-            parameter_dict_2['tax rate'] = mode_input
-            parameter_dict_distribution['tax rate'] = 'triangular'
+    elif radio_button_revenue_growth == 'Triangular':
+        lower_input = st.number_input('Lower end growth rate (in %)')
+        mode_input = st.number_input('Mode growth rate (in %)')
+        parameter_dict_1['revenue growth'] = lower_input
+        parameter_dict_2['revenue growth'] = mode_input
+        parameter_dict_distribution['revenue growth'] = 'triangular'
 
-        elif radio_button_tax_rate == 'Uniform':
-            lower_input = st.number_input('Lower end tax rate (in %)')
-            upper_input = st.number_input('Upper end tax rate (in %)')
-            parameter_dict_1['tax rate'] = lower_input
-            parameter_dict_2['tax rate'] = upper_input
-            parameter_dict_distribution['tax rate'] = 'uniform'
-
-        
-    col21, col22, col23 = st.beta_columns(3)
-
-    with col21:
-        st.subheader('Net capex/sales')
-        radio_button_tax_rate = st.radio('Choose capex ratio distribution', ('Normal', 'Triangular', 'Uniform'))
-
-        if radio_button_tax_rate == 'Normal':
-            mean_input = st.number_input('Mean capex ratio (in %)')
-            stddev_input = st.number_input('capex ratio std. dev. (in %)')
-            parameter_dict_1['capex ratio'] = mean_input
-            parameter_dict_2['capex ratio'] = stddev_input
-            parameter_dict_distribution['capex ratio'] = 'normal'
-
-        elif radio_button_tax_rate == 'Triangular':
-            lower_input = st.number_input('Lower end capex ratio (in %)')
-            mode_input = st.number_input('Mode capex ratio (in %)')
-            parameter_dict_1['capex ratio'] = lower_input
-            parameter_dict_2['capex ratio'] = mode_input
-            parameter_dict_distribution['capex ratio'] = 'triangular'
-
-        elif radio_button_tax_rate == 'Uniform':
-            lower_input = st.number_input('Lower end capex ratio (in %)')
-            upper_input = st.number_input('Upper end capex ratio (in %)')
-            parameter_dict_1['capex ratio'] = lower_input
-            parameter_dict_2['capex ratio'] = upper_input
-            parameter_dict_distribution['capex ratio'] = 'uniform'
-
-    with col22:
-        st.subheader('NWC/sales')
-        radio_button_tax_rate = st.radio('Choose NWC ratio distribution', ('Normal', 'Triangular', 'Uniform'))
-
-        if radio_button_tax_rate == 'Normal':
-            mean_input = st.number_input('Mean NWC ratio (in %)')
-            stddev_input = st.number_input('NWC ratio std. dev. (in %)')
-            parameter_dict_1['NWC ratio'] = mean_input
-            parameter_dict_2['NWC ratio'] = stddev_input
-            parameter_dict_distribution['NWC ratio'] = 'normal'
-
-        elif radio_button_tax_rate == 'Triangular':
-            lower_input = st.number_input('Lower end NWC ratio (in %)')
-            mode_input = st.number_input('Mode NWC ratio (in %)')
-            parameter_dict_1['NWC ratio'] = lower_input
-            parameter_dict_2['NWC ratio'] = mode_input
-            parameter_dict_distribution['NWC ratio'] = 'triangular'
-
-        elif radio_button_tax_rate == 'Uniform':
-            lower_input = st.number_input('Lower end NWC ratio (in %)')
-            upper_input = st.number_input('Upper end NWC ratio (in %)')
-            parameter_dict_1['NWC ratio'] = lower_input
-            parameter_dict_2['NWC ratio'] = upper_input
-            parameter_dict_distribution['NWC ratio'] = 'uniform'
-
-    with col23:
-        st.subheader('Additional inputs')
-        discount_rate = (st.number_input('Discount rate:')/100)
-        terminal_growth = (st.number_input('Terminal growth rate:')/100)
-        simulation_iterations = (st.number_input('Number of simulation iterations (at most 1000):'))
-        inputs_radio = st.radio('Please click Search if you are ready.', ('Entry', 'Search'))
-
-    equity_value_list = []
-    revenue_list_of_lists = []
-    ebit_list_of_lists = []
-    if inputs_radio == 'Search':
-        parameter_dict_1['latest revenue'] = company.income_statement.loc['totalRevenue', company.income_statement.columns[-1]]
-        parameter_dict_1['net debt'] = company.inputs.loc['netDebt', 'Historical average']
-        if simulation_iterations > 1000:
-            simulation_iterations = 1000
-        elif simulation_iterations < 0:
-            simulation_iterations = 100
-        for i in range(int(simulation_iterations)):
-            model_input = calculate_value_distribution(parameter_dict_1, parameter_dict_2, parameter_dict_distribution)
-            forecast_df = company.get_free_cash_flow_forecast(model_input)
-            revenue_list_of_lists.append(forecast_df.loc['Revenues'])
-            ebit_list_of_lists.append(forecast_df.loc['EBIT'])
-            model_output, equity_value = company.discount_free_cash_flows(model_input, discount_rate, terminal_growth)
-            equity_value_list.append(equity_value)
+    elif radio_button_revenue_growth == 'Uniform':
+        lower_input = st.number_input('Lower end growth rate (in %)')
+        upper_input = st.number_input('Upper end growth rate (in %)')
+        parameter_dict_1['revenue growth'] = lower_input
+        parameter_dict_2['revenue growth'] = upper_input
+        parameter_dict_distribution['revenue growth'] = 'uniform'
     
-    st.header('MC Simulation Output')
 
-    mean_equity_value = np.mean(equity_value_list)
-    stddev_equity_value = np.std(equity_value_list)
-    st.write('Mean equity value: $' + str(comma_format(mean_equity_value )))
-    st.write('Equity value std. deviation: $' + str(comma_format(stddev_equity_value)))
+with col12:
+    st.subheader('EBIT margin')
+    radio_button_ebit_margin = st.radio('Choose EBIT margin distribution', ('Normal', 'Triangular', 'Uniform'))
 
-    font_1 = {
-        'family' : 'Arial',
-            'size' : 12
-    }
+    if radio_button_ebit_margin == 'Normal':
+        mean_input = st.number_input('Mean EBIT margin (in %)')
+        stddev_input = st.number_input('EBIT margin std. dev. (in %)')
+        parameter_dict_1['ebit margin'] = mean_input
+        parameter_dict_2['ebit margin'] = stddev_input
+        parameter_dict_distribution['ebit margin'] = 'normal'
 
-    font_2 = {
-        'family' : 'Arial',
-            'size' : 14
-    }
+    elif radio_button_ebit_margin == 'Triangular':
+        lower_input = st.number_input('Lower end EBIT margin (in %)')
+        mode_input = st.number_input('Mode EBIT margin (in %)')
+        parameter_dict_1['ebit margin'] = lower_input
+        parameter_dict_2['ebit margin'] = mode_input
+        parameter_dict_distribution['ebit margin'] = 'triangular'
 
-    fig1 = plt.figure()
+    elif radio_button_ebit_margin == 'Uniform':
+        lower_input = st.number_input('Lower end EBIT margin (in %)')
+        upper_input = st.number_input('Upper end EBIT margin (in %)')
+        parameter_dict_1['ebit margin'] = lower_input
+        parameter_dict_2['ebit margin'] = upper_input
+        parameter_dict_distribution['ebit margin'] = 'uniform'
+
+
+with col13:
+    st.subheader('Tax rate')
+    radio_button_tax_rate = st.radio('Choose tax rate distribution', ('Normal', 'Triangular', 'Uniform'))
+
+    if radio_button_tax_rate == 'Normal':
+        mean_input = st.number_input('Mean tax rate (in %)')
+        stddev_input = st.number_input('Tax rate std. dev. (in %)')
+        parameter_dict_1['tax rate'] = mean_input
+        parameter_dict_2['tax rate'] = stddev_input
+        parameter_dict_distribution['tax rate'] = 'normal'
+
+    elif radio_button_tax_rate == 'Triangular':
+        lower_input = st.number_input('Lower end tax rate (in %)')
+        mode_input = st.number_input('Mode tax rate (in %)')
+        parameter_dict_1['tax rate'] = lower_input
+        parameter_dict_2['tax rate'] = mode_input
+        parameter_dict_distribution['tax rate'] = 'triangular'
+
+    elif radio_button_tax_rate == 'Uniform':
+        lower_input = st.number_input('Lower end tax rate (in %)')
+        upper_input = st.number_input('Upper end tax rate (in %)')
+        parameter_dict_1['tax rate'] = lower_input
+        parameter_dict_2['tax rate'] = upper_input
+        parameter_dict_distribution['tax rate'] = 'uniform'
+
+    
+col21, col22, col23 = st.beta_columns(3)
+
+with col21:
+    st.subheader('Net capex/sales')
+    radio_button_tax_rate = st.radio('Choose capex ratio distribution', ('Normal', 'Triangular', 'Uniform'))
+
+    if radio_button_tax_rate == 'Normal':
+        mean_input = st.number_input('Mean capex ratio (in %)')
+        stddev_input = st.number_input('capex ratio std. dev. (in %)')
+        parameter_dict_1['capex ratio'] = mean_input
+        parameter_dict_2['capex ratio'] = stddev_input
+        parameter_dict_distribution['capex ratio'] = 'normal'
+
+    elif radio_button_tax_rate == 'Triangular':
+        lower_input = st.number_input('Lower end capex ratio (in %)')
+        mode_input = st.number_input('Mode capex ratio (in %)')
+        parameter_dict_1['capex ratio'] = lower_input
+        parameter_dict_2['capex ratio'] = mode_input
+        parameter_dict_distribution['capex ratio'] = 'triangular'
+
+    elif radio_button_tax_rate == 'Uniform':
+        lower_input = st.number_input('Lower end capex ratio (in %)')
+        upper_input = st.number_input('Upper end capex ratio (in %)')
+        parameter_dict_1['capex ratio'] = lower_input
+        parameter_dict_2['capex ratio'] = upper_input
+        parameter_dict_distribution['capex ratio'] = 'uniform'
+
+with col22:
+    st.subheader('NWC/sales')
+    radio_button_tax_rate = st.radio('Choose NWC ratio distribution', ('Normal', 'Triangular', 'Uniform'))
+
+    if radio_button_tax_rate == 'Normal':
+        mean_input = st.number_input('Mean NWC ratio (in %)')
+        stddev_input = st.number_input('NWC ratio std. dev. (in %)')
+        parameter_dict_1['NWC ratio'] = mean_input
+        parameter_dict_2['NWC ratio'] = stddev_input
+        parameter_dict_distribution['NWC ratio'] = 'normal'
+
+    elif radio_button_tax_rate == 'Triangular':
+        lower_input = st.number_input('Lower end NWC ratio (in %)')
+        mode_input = st.number_input('Mode NWC ratio (in %)')
+        parameter_dict_1['NWC ratio'] = lower_input
+        parameter_dict_2['NWC ratio'] = mode_input
+        parameter_dict_distribution['NWC ratio'] = 'triangular'
+
+    elif radio_button_tax_rate == 'Uniform':
+        lower_input = st.number_input('Lower end NWC ratio (in %)')
+        upper_input = st.number_input('Upper end NWC ratio (in %)')
+        parameter_dict_1['NWC ratio'] = lower_input
+        parameter_dict_2['NWC ratio'] = upper_input
+        parameter_dict_distribution['NWC ratio'] = 'uniform'
+
+with col23:
+    st.subheader('Additional inputs')
+    discount_rate = (st.number_input('Discount rate:')/100)
+    terminal_growth = (st.number_input('Terminal growth rate:')/100)
+    simulation_iterations = (st.number_input('Number of simulation iterations (at most 1000):'))
+    inputs_radio = st.radio('Please click Search if you are ready.', ('Entry', 'Search'))
+
+equity_value_list = []
+revenue_list_of_lists = []
+ebit_list_of_lists = []
+if inputs_radio == 'Search':
+    parameter_dict_1['latest revenue'] = company.income_statement.loc['totalRevenue', company.income_statement.columns[-1]]
+    parameter_dict_1['net debt'] = company.inputs.loc['netDebt', 'Historical average']
+    if simulation_iterations > 1000:
+        simulation_iterations = 1000
+    elif simulation_iterations < 0:
+        simulation_iterations = 100
+    for i in range(int(simulation_iterations)):
+        model_input = calculate_value_distribution(parameter_dict_1, parameter_dict_2, parameter_dict_distribution)
+        forecast_df = company.get_free_cash_flow_forecast(model_input)
+        revenue_list_of_lists.append(forecast_df.loc['Revenues'])
+        ebit_list_of_lists.append(forecast_df.loc['EBIT'])
+        model_output, equity_value = company.discount_free_cash_flows(model_input, discount_rate, terminal_growth)
+        equity_value_list.append(equity_value)
+
+st.header('MC Simulation Output')
+
+mean_equity_value = np.mean(equity_value_list)
+stddev_equity_value = np.std(equity_value_list)
+st.write('Mean equity value: $' + str(comma_format(mean_equity_value )))
+st.write('Equity value std. deviation: $' + str(comma_format(stddev_equity_value)))
+
+font_1 = {
+    'family' : 'Arial',
+        'size' : 12
+}
+
+font_2 = {
+    'family' : 'Arial',
+        'size' : 14
+}
+
+fig1 = plt.figure()
+plt.style.use('seaborn-whitegrid')
+plt.title(ticker_input + ' Monte Carlo Simulation', fontdict = font_1)
+plt.xlabel('Equity value (in $)', fontdict = font_1)
+plt.ylabel('Number of occurences', fontdict = font_1)
+plt.hist(equity_value_list, bins = 50, color = '#006699', edgecolor = 'black')
+st.pyplot(fig1)
+
+
+col31, col32 = st.beta_columns(2)
+with col31:
+    fig2 = plt.figure()
+    x = range(6)[1:6]
     plt.style.use('seaborn-whitegrid')
-    plt.title(ticker_input + ' Monte Carlo Simulation', fontdict = font_1)
-    plt.xlabel('Equity value (in $)', fontdict = font_1)
-    plt.ylabel('Number of occurences', fontdict = font_1)
-    plt.hist(equity_value_list, bins = 50, color = '#006699', edgecolor = 'black')
-    st.pyplot(fig1)
+    plt.title('Revenue Forecast Monte Carlo Simulation', fontdict = font_2)
+    plt.xticks(ticks = x)
+    plt.xlabel('Year', fontdict = font_2)
+    plt.ylabel('Revenue (in $)', fontdict = font_2)
+    for i in revenue_list_of_lists:
+        plt.plot(x, i)
+    st.pyplot(fig2)
 
-
-    col31, col32 = st.beta_columns(2)
-    with col31:
-        fig2 = plt.figure()
-        x = range(6)[1:6]
-        plt.style.use('seaborn-whitegrid')
-        plt.title('Revenue Forecast Monte Carlo Simulation', fontdict = font_2)
-        plt.xticks(ticks = x)
-        plt.xlabel('Year', fontdict = font_2)
-        plt.ylabel('Revenue (in $)', fontdict = font_2)
-        for i in revenue_list_of_lists:
-            plt.plot(x, i)
-        st.pyplot(fig2)
-    
-    with col32:
-        fig3 = plt.figure()
-        x = range(6)[1:6]
-        plt.style.use('seaborn-whitegrid')
-        plt.title('EBIT Forecast Monte Carlo Simulation', fontdict = font_2)
-        plt.xticks(ticks = x)
-        plt.xlabel('Year', fontdict = font_2)
-        plt.ylabel('EBIT (in $)', fontdict = font_2)
-        for i in ebit_list_of_lists:
-            plt.plot(x, i)
-        st.pyplot(fig3)
+with col32:
+    fig3 = plt.figure()
+    x = range(6)[1:6]
+    plt.style.use('seaborn-whitegrid')
+    plt.title('EBIT Forecast Monte Carlo Simulation', fontdict = font_2)
+    plt.xticks(ticks = x)
+    plt.xlabel('Year', fontdict = font_2)
+    plt.ylabel('EBIT (in $)', fontdict = font_2)
+    for i in ebit_list_of_lists:
+        plt.plot(x, i)
+    st.pyplot(fig3)
 
 st.write('Disclaimer: Information and output provided on this site do \
     not constitute investment advice.')
