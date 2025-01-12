@@ -161,19 +161,12 @@ st.header('General company information')
 ticker_input = st.text_input('Please enter your company ticker here:')
 status_radio = st.radio('Please click Search when you are ready.', ('Entry', 'Search'))
 
-
-@st.cache
-def get_company_data():
-    company = Company(ticker_input)
-    return company
-
 if status_radio == 'Search':
-    company = get_company_data()
-    st.header('Key Valuation Metrics')
-    st.dataframe(company.inputs)
+    st.write('Unfortunately, the Python library yahoo_fin which is required \
+    to run this application is outdated. An update to the library is needed \
+    to ensure that the simulation app is fully functional.')
 
-
-st.subheader('Monte Carlo Simulation')
+st.header('Monte Carlo Simulation')
 st.subheader('Random variables')
 st.write('When conducting a company valuation through a Monte Carlo simulation, \
     a variety of input metrics can be treated as random variables. Such \
@@ -368,7 +361,7 @@ if inputs_radio == 'Search':
         model_output, equity_value = company.discount_free_cash_flows(model_input, discount_rate, terminal_growth)
         equity_value_list.append(equity_value)
 
-st.header('MC Simulation Output')
+st.subheader('MC Simulation Output')
 
 mean_equity_value = np.mean(equity_value_list)
 stddev_equity_value = np.std(equity_value_list)
