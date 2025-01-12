@@ -147,7 +147,7 @@ class Company:
 
 st.title('Monte Carlo Valuation App')
 
-with st.beta_expander('How to Use'):
+with st.beta_expander('How to use'):
     st.write('This application allows you to conduct a **probabilistic** \
         valuation of companies you are interested in. Please enter the \
         **stock ticker** of your company. Subsequently, the program will \
@@ -164,7 +164,7 @@ status_radio = st.radio('Please click Search when you are ready.', ('Entry', 'Se
 if status_radio == 'Search':
     st.write('Unfortunately, the Python library yahoo_fin which is required \
     to run this application is outdated. An update to the library is needed \
-    to ensure that the simulation app is fully functional.')
+    to ensure that the valuation app is fully functional.')
 
 st.header('Monte Carlo Simulation')
 st.subheader('Random variables')
