@@ -1,5 +1,5 @@
 matplotlib==3.3.4
 numpy==1.19.5
 pandas==1.2.0
-streamlit==0.74.1
+streamlit==1.20.0
 yahoo-fin==0.8.9.1
